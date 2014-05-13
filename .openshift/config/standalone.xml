@@ -74,7 +74,7 @@
                 <level name="ERROR"/>
             </logger>
             <root-logger>
-                <level name="ALL"/>
+                <level name="FINER"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                 </handlers>
