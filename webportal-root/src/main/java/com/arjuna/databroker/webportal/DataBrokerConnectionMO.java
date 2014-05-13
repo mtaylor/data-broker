@@ -6,6 +6,7 @@ package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -164,7 +165,7 @@ public class DataBrokerConnectionMO implements Serializable
         }
         catch (Throwable throwable)
         {
-            logger.warning("Unexpected problem in 'load'", throwable);
+            logger.log(Level.WARNING, "Unexpected problem in 'load'", throwable);
             clear();
             _errorMessage = "Unexpected problem in 'load'";
         }
