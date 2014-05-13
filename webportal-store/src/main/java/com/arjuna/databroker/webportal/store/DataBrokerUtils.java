@@ -43,23 +43,25 @@ public class DataBrokerUtils
 
     public void createDataBroker(String name, String summary, String serviceRootURL, String requesterId)
     {
-        logger.fine("DataBrokerUtils.createDataBroker");
+        logger.fine("DataBrokerUtils.createDataBroker: " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = new DataBrokerEntity(name, summary, serviceRootURL, requesterId);
+
+        logger.fine("DataBrokerUtils.createDataBroker: " + dataBroker.getName() + ", " + dataBroker.getSummary() + ", " + dataBroker.getServiceRootURL() + ", " + dataBroker.getRequesterId());
 
         _entityManager.persist(dataBroker);
     }
 
     public DataBrokerEntity retrieveDataBroker(UUID id)
     {
-        logger.fine("DataBrokerUtils.retrieveDataBroker");
+        logger.fine("DataBrokerUtils.retrieveDataBroker: " + id.toString());
 
         return _entityManager.find(DataBrokerEntity.class, id);
     }
 
     public void replaceDataBroker(UUID id, String name, String summary, String serviceRootURL, String requesterId)
     {
-        logger.fine("DataBrokerUtils.replaceDataBroker");
+        logger.fine("DataBrokerUtils.replaceDataBroker: " + id.toString() + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
         dataBroker.setName(name);
@@ -72,7 +74,7 @@ public class DataBrokerUtils
 
     public void removeDataBroker(UUID id)
     {
-        logger.fine("DataBrokerUtils.removeDataBroker");
+        logger.fine("DataBrokerUtils.removeDataBroker: " + id.toString());
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
 
