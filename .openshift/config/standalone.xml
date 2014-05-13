@@ -58,6 +58,9 @@
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
+            <logger category="com.arjuna.databroker">
+                <level name="FINER"/>
+            </logger>
             <logger category="org.apache.tomcat.util.modeler">
                 <level name="WARN"/>
             </logger>
@@ -71,7 +74,7 @@
                 <level name="ERROR"/>
             </logger>
             <root-logger>
-                <level name="INFO"/>
+                <level name="ALL"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                 </handlers>
