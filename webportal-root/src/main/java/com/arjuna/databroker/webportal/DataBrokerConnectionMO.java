@@ -11,12 +11,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.store.DataBrokerEntity;
 import com.arjuna.databroker.webportal.store.DataBrokerUtils;
+import com.sun.istack.internal.logging.Logger;
 
 @SessionScoped
 @ManagedBean(name="databrokerconnection")
 public class DataBrokerConnectionMO implements Serializable
 {
     private static final long serialVersionUID = 5608639674146189356L;
+
+    private static final Logger logger = Logger.getLogger(DataBrokerConnectionMO.class.getName());
 
     public DataBrokerConnectionMO()
     {
@@ -25,6 +28,7 @@ public class DataBrokerConnectionMO implements Serializable
         _summary        = "";
         _serviceRootURL = "";
         _requesterId    = "";
+        _errorMessage   = "";
     }
 
     public String getId()
@@ -77,9 +81,20 @@ public class DataBrokerConnectionMO implements Serializable
         _requesterId = requesterId;
     }
 
+    public String getErrorMessage()
+    {
+        return _errorMessage;
+    }
+
+    public void getErrorMessage(String errorMessage)
+    {
+        _errorMessage = errorMessage;
+    }
+
     public String doAdd()
     {
         clear();
+        _errorMessage = "";
 
         return "databrokerconnection_add?faces-redirect=true";
     }
@@ -87,6 +102,7 @@ public class DataBrokerConnectionMO implements Serializable
     public String doAddSubmit()
     {
         _dataBrokerUtils.createDataBroker(_name, _summary, _serviceRootURL, _requesterId);
+        _errorMessage = "";
 
         return "databrokerconnection?faces-redirect=true";
     }
@@ -100,14 +116,17 @@ public class DataBrokerConnectionMO implements Serializable
 
     public String doChangeSubmit()
     {
-        _dataBrokerUtils.replaceDataBroker(UUID.fromString(_id), _name, _summary, _serviceRootURL, _requesterId);
+        if ((_id != null) && (! _id.equals("")))
+            _dataBrokerUtils.replaceDataBroker(UUID.fromString(_id), _name, _summary, _serviceRootURL, _requesterId);
+        else
+            _errorMessage = "Unable to update information.";
 
         return "databrokerconnection?faces-redirect=true";
     }
 
     private void clear()
     {
-        _id             = "";
+        _id             = null;
         _name           = "";
         _summary        = "";
         _serviceRootURL = "";
@@ -118,7 +137,18 @@ public class DataBrokerConnectionMO implements Serializable
     {
         try
         {
-            DataBrokerEntity dataBroker = _dataBrokerUtils.retrieveDataBroker(UUID.fromString(id));
+            DataBrokerEntity dataBroker = null;
+            
+            _errorMessage = null;
+            try
+            {
+                dataBroker = _dataBrokerUtils.retrieveDataBroker(UUID.fromString(id));
+            }
+            catch (IllegalArgumentException illegalArgumentException)
+            {
+                logger.warning("Invalid identifier used in 'load': [" + id + "]");
+                _errorMessage = "Invalid data server specified.";
+            }
 
             clear();
             if (dataBroker != null)
@@ -129,11 +159,14 @@ public class DataBrokerConnectionMO implements Serializable
                 _serviceRootURL = dataBroker.getServiceRootURL();
                 _requesterId    = dataBroker.getRequesterId();
             }
+            else if (_errorMessage != null)
+                _errorMessage = "Unable to load information.";
         }
         catch (Throwable throwable)
         {
-            throwable.printStackTrace();
+            logger.warning("Unexpected problem in 'load'", throwable);
             clear();
+            _errorMessage = "Unexpected problem in 'load'";
         }
     }
 
@@ -142,6 +175,7 @@ public class DataBrokerConnectionMO implements Serializable
     private String _summary;
     private String _serviceRootURL;
     private String _requesterId;
+    private String _errorMessage;
 
     @EJB
     private DataBrokerUtils _dataBrokerUtils;
