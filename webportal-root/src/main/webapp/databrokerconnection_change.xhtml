@@ -47,6 +47,10 @@
                     <h:panelGroup styleClass="databroker-title" layout="block">
                         <h:outputText styleClass="databroker-title" value="Change DataBroker Connection"/>
                     </h:panelGroup>
+                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databrokerconnection.errorMessage}">
+                        <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="databroker-error-message" value="#{databrokerconnection.errorMessage}"/>
+                    </h:panelGroup>
                     <h:panelGrid styleClass="databroker" columnClasses="databroker-column-one,databroker-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
                         <h:outputText styleClass="databroker-header" value="Name"/>
                         <h:inputText styleClass="databroker-value" value="#{databrokerconnection.name}"/>

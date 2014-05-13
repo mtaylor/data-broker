@@ -34,6 +34,23 @@ span.databroker-title
 {
 }
 
+div.databroker-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.databroker-error-title
+{
+	font-weight:		bold;
+}
+
+span.databroker-error-message
+{
+	color:			#EEA05D;
+}
+
 table.databroker
 {
 	margin:			0 -0.5em 0 -0.5em;

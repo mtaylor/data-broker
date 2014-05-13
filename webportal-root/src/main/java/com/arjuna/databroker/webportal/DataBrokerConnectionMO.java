@@ -160,7 +160,7 @@ public class DataBrokerConnectionMO implements Serializable
                 _serviceRootURL = dataBroker.getServiceRootURL();
                 _requesterId    = dataBroker.getRequesterId();
             }
-            else if (_errorMessage != null)
+            else if (_errorMessage == null)
                 _errorMessage = "Unable to load information.";
         }
         catch (Throwable throwable)
