@@ -6,12 +6,12 @@ package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.store.DataBrokerEntity;
 import com.arjuna.databroker.webportal.store.DataBrokerUtils;
-import com.sun.istack.internal.logging.Logger;
 
 @SessionScoped
 @ManagedBean(name="databrokerconnection")
