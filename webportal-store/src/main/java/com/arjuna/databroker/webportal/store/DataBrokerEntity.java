@@ -29,12 +29,12 @@ public class DataBrokerEntity implements Serializable
         _requesterId    = requesterId;
     }
 
-    public UUID getId()
+    public String getId()
     {
         return _id;
     }
 
-    public void setId(UUID id)
+    public void setId(String id)
     {
         _id = id;
     }
@@ -83,7 +83,7 @@ public class DataBrokerEntity implements Serializable
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    protected UUID _id;
+    protected String _id;
 
     @Column(name = "name")
     private String _name;

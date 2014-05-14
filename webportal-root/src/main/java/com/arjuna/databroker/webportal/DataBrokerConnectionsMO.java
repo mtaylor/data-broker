@@ -44,7 +44,7 @@ public class DataBrokerConnectionsMO implements Serializable
 
     public String doRemove(String id)
     {
-        _dataBrokerUtils.removeDataBroker(UUID.fromString(id));
+        _dataBrokerUtils.removeDataBroker(id);
 
         load();
 
@@ -59,7 +59,7 @@ public class DataBrokerConnectionsMO implements Serializable
 
             _dataBrokerConnections.clear();
             for (DataBrokerEntity dataBroker: dataBrokers)
-                _dataBrokerConnections.add(new DataBrokerConnectionVO(dataBroker.getId().toString(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
+                _dataBrokerConnections.add(new DataBrokerConnectionVO(dataBroker.getId(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
 
             return true;
         }

@@ -5,7 +5,6 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -118,7 +117,7 @@ public class DataBrokerConnectionMO implements Serializable
     public String doChangeSubmit()
     {
         if ((_id != null) && (! _id.equals("")))
-            _dataBrokerUtils.replaceDataBroker(UUID.fromString(_id), _name, _summary, _serviceRootURL, _requesterId);
+            _dataBrokerUtils.replaceDataBroker(_id, _name, _summary, _serviceRootURL, _requesterId);
         else
             _errorMessage = "Unable to update information.";
 
@@ -141,20 +140,12 @@ public class DataBrokerConnectionMO implements Serializable
             DataBrokerEntity dataBroker = null;
             
             _errorMessage = null;
-            try
-            {
-                dataBroker = _dataBrokerUtils.retrieveDataBroker(UUID.fromString(id));
-            }
-            catch (IllegalArgumentException illegalArgumentException)
-            {
-                logger.warning("Invalid identifier used in 'load': [" + id + "]");
-                _errorMessage = "Invalid data server specified.";
-            }
+            dataBroker = _dataBrokerUtils.retrieveDataBroker(id);
 
             clear();
             if (dataBroker != null)
             {
-                _id             = dataBroker.getId().toString();
+                _id             = dataBroker.getId();
                 _name           = dataBroker.getName();
                 _summary        = dataBroker.getSummary();
                 _serviceRootURL = dataBroker.getServiceRootURL();

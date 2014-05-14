@@ -75,7 +75,7 @@ public class DataBrokerMO implements Serializable
 
     public String doLoad(String id)
     {
-        DataBrokerEntity dataBrokerEntity = _dataBrokerUtils.retrieveDataBroker(UUID.fromString(id));
+        DataBrokerEntity dataBrokerEntity = _dataBrokerUtils.retrieveDataBroker(id);
 
         _dataFlowSummaries.clear();
         _dataFlowNodeFactorySummaries.clear();

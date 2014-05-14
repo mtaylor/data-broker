@@ -6,7 +6,6 @@ package com.arjuna.databroker.webportal.store;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -52,16 +51,16 @@ public class DataBrokerUtils
         _entityManager.persist(dataBroker);
     }
 
-    public DataBrokerEntity retrieveDataBroker(UUID id)
+    public DataBrokerEntity retrieveDataBroker(String id)
     {
-        logger.fine("DataBrokerUtils.retrieveDataBroker: " + id.toString());
+        logger.fine("DataBrokerUtils.retrieveDataBroker: " + id);
 
         return _entityManager.find(DataBrokerEntity.class, id);
     }
 
-    public void replaceDataBroker(UUID id, String name, String summary, String serviceRootURL, String requesterId)
+    public void replaceDataBroker(String id, String name, String summary, String serviceRootURL, String requesterId)
     {
-        logger.fine("DataBrokerUtils.replaceDataBroker: " + id.toString() + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
+        logger.fine("DataBrokerUtils.replaceDataBroker: " + id + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
         dataBroker.setName(name);
@@ -72,9 +71,9 @@ public class DataBrokerUtils
         _entityManager.merge(dataBroker);
     }
 
-    public void removeDataBroker(UUID id)
+    public void removeDataBroker(String id)
     {
-        logger.fine("DataBrokerUtils.removeDataBroker: " + id.toString());
+        logger.fine("DataBrokerUtils.removeDataBroker: " + id);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
 
