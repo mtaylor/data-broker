@@ -6,7 +6,6 @@ package com.arjuna.databroker.metadata.store;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -24,13 +23,13 @@ public class AccessControlUtils
 {
     private static final Logger logger = Logger.getLogger(AccessControlUtils.class.getName());
 
-    public List<UUID> listAccessable(String requesterId, String userId)
+    public List<String> listAccessable(String requesterId, String userId)
     {
         logger.fine("AccessControlUtils.listAccessableIds: \"" + requesterId + "\", \"" + userId + "\"");
 
         try
         {
-            TypedQuery<UUID> query = _entityManager.createQuery("SELECT ac._metadata.id FROM AccessControlEntity AS ac WHERE ((ac._requesterId = :requesterId) OR (ac._requesterId IS NULL)) AND ((ac._userId = :userId) OR (ac._userId IS NULL)) AND (ac._canList = TRUE)", UUID.class);
+            TypedQuery<String> query = _entityManager.createQuery("SELECT ac._metadata.id FROM AccessControlEntity AS ac WHERE ((ac._requesterId = :requesterId) OR (ac._requesterId IS NULL)) AND ((ac._userId = :userId) OR (ac._userId IS NULL)) AND (ac._canList = TRUE)", String.class);
             query.setParameter("requesterId", requesterId);
             query.setParameter("userId", userId);
 
@@ -43,13 +42,13 @@ public class AccessControlUtils
         }
     }
 
-    public boolean canRead(UUID uuid, String requesterId, String userId)
+    public boolean canRead(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canRead: \"" + uuid + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.fine("AccessControlUtils.canRead: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
 
         try
         {
-            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
 
             if (metadata == null)
                 return false;
@@ -68,13 +67,13 @@ public class AccessControlUtils
         }
     }
 
-    public boolean canUpdate(UUID uuid, String requesterId, String userId)
+    public boolean canUpdate(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canUpdate: \"" + uuid + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.fine("AccessControlUtils.canUpdate: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
         
         try
         {
-            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
 
             if (metadata == null)
                 return false;
@@ -93,13 +92,13 @@ public class AccessControlUtils
         }
     }
 
-    public boolean canRemove(UUID uuid, String requesterId, String userId)
+    public boolean canRemove(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canRemove: \"" + uuid + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.fine("AccessControlUtils.canRemove: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
         
         try
         {
-            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
 
             if (metadata == null)
                 return false;
@@ -118,13 +117,13 @@ public class AccessControlUtils
         }
     }
 
-    public boolean canCreateChild(UUID uuid, String requesterId, String userId)
+    public boolean canCreateChild(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canCreateChild: \"" + uuid + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.fine("AccessControlUtils.canCreateChild: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
     
         try
         {
-            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
 
             if (metadata == null)
             {
@@ -151,13 +150,13 @@ public class AccessControlUtils
         }
     }
 
-    public boolean canChangeAccess(UUID uuid, String requesterId, String userId)
+    public boolean canChangeAccess(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canChangeAccess: \"" + uuid + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.fine("AccessControlUtils.canChangeAccess: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
     
         try
         {
-            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
 
             if (metadata == null)
                 return false;

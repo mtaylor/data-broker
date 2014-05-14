@@ -4,7 +4,6 @@
 
 package com.arjuna.databroker.metadata.store;
 
-import java.util.UUID;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -27,9 +26,7 @@ public class MetadataUtils
 
         try
         {
-            UUID uuid = UUID.fromString(id);
-            
-            MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, id);
             
             if (metadataEntity != null)
                 return metadataEntity.getContent();
@@ -49,9 +46,7 @@ public class MetadataUtils
 
         try
         {
-            UUID uuid = UUID.fromString(id);
-
-            MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, uuid);
+            MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, id);
 
             if (metadataEntity != null)
             {
@@ -70,13 +65,13 @@ public class MetadataUtils
         }
     }
 
-    public String createChild(UUID parentUUID, String content)
+    public String createChild(String parentId, String content)
     {
-        logger.fine("MetadataUtils.setContent: \"" + parentUUID + "\"");
+        logger.fine("MetadataUtils.setContent: \"" + parentId + "\"");
 
         try
         {
-            MetadataEntity parentEntity = _entityManager.find(MetadataEntity.class, parentUUID);
+            MetadataEntity parentEntity = _entityManager.find(MetadataEntity.class, parentId);
             MetadataEntity childEntity  = new MetadataEntity();
 
             childEntity.setParent(parentEntity);

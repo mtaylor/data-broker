@@ -7,7 +7,6 @@ package com.arjuna.databroker.control.ws;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -45,7 +44,7 @@ public class MetadataWS
 
             List<String> result = new LinkedList<String>();
 
-            for (UUID accessableId: _accessControlUtils.listAccessable(requesterId, userId))
+            for (String accessableId: _accessControlUtils.listAccessable(requesterId, userId))
                 result.add(accessableId.toString());
 
             return result;
@@ -65,19 +64,8 @@ public class MetadataWS
     {
         try
         {
-            UUID uuid = null;
-            try
-            {
-                uuid = UUID.fromString(id);
-            }
-            catch (IllegalArgumentException illegalArgumentException)
-            {
-                logger.log(Level.WARNING, "getMetadata: invalid id: [" + id + "]");
-                return "";
-            }
-
-            logger.log(Level.WARNING, "getMetadata: Reading [" + uuid + "][" + requesterId + "][" + requesterId + "]");
-            if (_accessControlUtils.canRead(uuid, requesterId, userId))
+            logger.log(Level.WARNING, "getMetadata: Reading [" + id + "][" + requesterId + "][" + requesterId + "]");
+            if (_accessControlUtils.canRead(id, requesterId, userId))
             {
                 String content = _metadataUtils.getContent(id);
             
@@ -143,19 +131,8 @@ public class MetadataWS
                 return "";
             }
 
-            UUID parentUUID = null;
-            try
-            {
-                parentUUID = UUID.fromString(parentId);
-            }
-            catch (IllegalArgumentException illegalArgumentException)
-            {
-                logger.log(Level.WARNING, "postMetadata: invalid parentId: [" + parentId + "]");
-                return "";
-            }
-
-            if (_accessControlUtils.canCreateChild(parentUUID, requesterId, userId))
-                return _metadataUtils.createChild(parentUUID, content);
+            if (_accessControlUtils.canCreateChild(parentId, requesterId, userId))
+                return _metadataUtils.createChild(parentId, content);
             else
             {
                 logger.log(Level.WARNING, "postMetadata: Can't be access");
@@ -179,17 +156,7 @@ public class MetadataWS
             if ((requesterId == null) || (userId == null))
                 logger.log(Level.WARNING, "putMetadata: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
 
-            UUID uuid = null;
-            try
-            {
-                uuid = UUID.fromString(id);
-            }
-            catch (IllegalArgumentException illegalArgumentException)
-            {
-                logger.log(Level.WARNING, "putMetadata: invalid id: [" + id + "]");
-            }
-
-            if (_accessControlUtils.canUpdate(uuid, requesterId, userId))
+            if (_accessControlUtils.canUpdate(id, requesterId, userId))
             {
                 if (_metadataUtils.setContent(id, content))
                     logger.log(Level.WARNING, "putMetadata: Can't be replaced");
