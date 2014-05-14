@@ -75,7 +75,7 @@ public class DataFlowWS
             }
             else
                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
-       }
+        }
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
@@ -110,7 +110,7 @@ public class DataFlowWS
             }
             else
                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
-       }
+        }
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
@@ -153,7 +153,7 @@ public class DataFlowWS
             }
             else
                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
-       }
+        }
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
@@ -197,7 +197,7 @@ public class DataFlowWS
             }
             else
                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
-       }
+        }
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
@@ -248,10 +248,10 @@ public class DataFlowWS
             }
             else
                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
-       }
+        }
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
-   }
+    }
 
     @GET
     @Path("{dataflowid}")
