@@ -30,12 +30,12 @@ public class MetadataEntity implements Serializable
         _content = content;
     }
 
-    public UUID getId()
+    public String getId()
     {
         return _id;
     }
 
-    public void setId(UUID id)
+    public void setId(String id)
     {
         _id = id;
     }
@@ -64,7 +64,7 @@ public class MetadataEntity implements Serializable
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    protected UUID _id;
+    protected String _id;
 
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "parent")
