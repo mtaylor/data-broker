@@ -7,7 +7,6 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.UUID;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
